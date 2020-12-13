@@ -1,0 +1,43 @@
+version: "3"
+services:
+  eureka:
+    build:
+      ./eurekaserver
+    ports:
+      - "8083:8083"
+    networks:
+      - network-eureka
+    environment: 
+      - EUREKA_URL=eureka
+      - EUREKA_PORT=8083
+   
+  order-service:
+    build: 
+      ./order-service
+    ports:
+      - "8084:8084"
+    networks:
+      - network-eureka 
+    depends_on:
+      - eureka
+    environment: 
+      - EUREKA_URL=eureka
+      - EUREKA_PORT=8083
+
+  api-gateway:
+    build: 
+      ./apigateway
+    ports:
+      - "8080:8080"
+    networks:
+      - network-eureka
+    depends_on:
+      - eureka
+      - order-service
+    environment: 
+      - EUREKA_URL=eureka
+      - EUREKA_PORT=8083
+
+networks:
+  network-eureka:
+    driver: bridge

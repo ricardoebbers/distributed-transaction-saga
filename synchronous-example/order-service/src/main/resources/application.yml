@@ -1,0 +1,8 @@
+server:
+  port: ${PORT:8084}
+
+eureka.client.serviceUrl.defaultZone: http://${EUREKA_URL:localhost}:${EUREKA_PORT:8083}/eureka
+
+spring:
+  application.name: order-service
+

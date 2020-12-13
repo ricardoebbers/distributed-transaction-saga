@@ -2,11 +2,10 @@
 projectName="synchronous-example"
 echo "building services of $projectName..."
 for d in */; do
-    echo "building '$d' service..."
+    echo "entering $d folder..."
     cd "$d" || exit
-    imageName="$projectName/${d%/}"
-    echo "creating '$imageName' image..."
-    ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName="$imageName"
+    echo "building '$d' service..."
+    ./mvnw clean install -Dmaven.test.skip=true
     cd ..
 done
 echo "building done."
