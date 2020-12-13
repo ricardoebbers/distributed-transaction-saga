@@ -6,16 +6,17 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class GroupOpenApi(
+class OpenApiConfig(
         private val locator: RouteDefinitionLocator
 ) {
+
     @Bean
     fun apis(): List<GroupedOpenApi> {
         return locator.routeDefinitions.collectList().block()
                 ?.filter { it.id.matches(".*-service".toRegex()) }
                 ?.map {
                     val name = it.id.replace("-service".toRegex(), "")
-                    GroupedOpenApi.builder().pathsToMatch("/$name/**").setGroup(name).build()
+                    GroupedOpenApi.builder().pathsToMatch("/$name/**").group(name).build()
                 } ?: listOf()
     }
 }

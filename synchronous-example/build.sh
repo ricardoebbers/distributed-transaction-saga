@@ -7,4 +7,5 @@ for d in */; do
     ./mvnw clean install -Dmaven.test.skip=true
     cd ..
 done
+docker-compose build
 echo "building done."
