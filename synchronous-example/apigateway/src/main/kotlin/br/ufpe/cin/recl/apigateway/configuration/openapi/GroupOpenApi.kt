@@ -11,14 +11,11 @@ class GroupOpenApi(
 ) {
     @Bean
     fun apis(): List<GroupedOpenApi> {
-        locator.routeDefinitions
-                .collectList()
-                .block()
+        return locator.routeDefinitions.collectList().block()
                 ?.filter { it.id.matches(".*-service".toRegex()) }
-                ?.forEach {
+                ?.map {
                     val name = it.id.replace("-service".toRegex(), "")
-                    GroupedOpenApi.builder().pathsToMatch("/$name/**").group(name).build()
-                }
-        return listOf()
+                    GroupedOpenApi.builder().pathsToMatch("/$name/**").setGroup(name).build()
+                } ?: listOf()
     }
 }
