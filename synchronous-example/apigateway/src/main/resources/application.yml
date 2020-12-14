@@ -6,11 +6,6 @@ eureka.client.serviceUrl.defaultZone: http://${EUREKA_URL:localhost}:${EUREKA_PO
 spring:
   application.name: api-gateway-service
   cloud.gateway:
-    globalcors.corsConfigurations:
-      '[/**]':
-        allowedOrigins: http://${EUREKA_URL:localhost}:${EUREKA_PORT:8083}
-        allowedMethods:
-          - GET
     discovery.locator.enabled: true
     routes:
       - id: openapi
